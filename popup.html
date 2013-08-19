@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popup Page</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap.css"/>
+    <style>
+        #page{
+            width: 160px;
+        }
+        nav.op-list section{
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        *, label, nav.op-list button, nav.op-list a{
+            font-family: 'Microsoft Yahei', '微软雅黑';
+        }
+        #modifyDefault{
+            font-size: smaller;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="page">
+        <div class="content">
+            <nav class="op-list">
+
+                <section>
+                    <button id="snapshot" class="btn btn-block btn-primary">创建快照</button>
+                    <button id="recovery" class="btn btn-block btn-primary">数据恢复</button>
+                </section>
+
+                <section>
+                    <button id="autofill" class="btn btn-block btn-danger">自动填充</button>
+                    <a id="modifyDefault" href="options.html" target="_blank">修改自动填充默认值</a>
+                </section>
+
+            </nav>
+        </div>
+    </div>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

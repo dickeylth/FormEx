@@ -10,7 +10,7 @@
 chrome.runtime.sendMessage({}, function(response) {});
 
 // chrome优化的localStorage
-var storage = chrome.localStorage;
+var storage = chrome.storage.local;
 
 //  href, get url without query
 var href = window.location.href.split('?')[0];
@@ -48,7 +48,7 @@ var apis = {
             if(tagName == 'input' && inpType && ($.inArray(inpType, excludeInputs) == -1)){
 
                 var typeObj = filtedInputs[tagName][inpType];
-                var key = (id && ("id=" + id)) || (name && ("name=" + name));
+                var key = (id && ("#" + id)) || (name && ("input[name=" + name + "]"));
                 if(!typeObj){
                     typeObj = {};
                     typeObj[key] = {};
@@ -62,7 +62,7 @@ var apis = {
                         if($.isEmptyObject(typeObj[key])){
                             // 还没有该类型的键值对
                             var val = id ? $item : [$item];
-                            typeObj[key] = $item;
+                            typeObj[key] = val;
                         }else{
                             // 已有此键值对数组，直接放入
                             if(id){
@@ -95,9 +95,9 @@ var apis = {
                 // 对于select和textarea，优先按id保存值
 
                 if(id){
-                    filtedInputs[tagName]["id=" + id] = $item;
+                    filtedInputs[tagName]["#" + id] = $item;
                 }else if(name){
-                    filtedInputs[tagName]["name=" + name] = $item;
+                    filtedInputs[tagName][tagName + "[name=" + name + "]"] = $item;
                 }
             }
 
@@ -125,6 +125,46 @@ var apis = {
         return filtedNodes;
     },
 
+    transValToNode: function(storedData){
+
+        var self = arguments.callee;
+
+        $.each(storedData, function(selector, value){
+
+            var valueType = $.type(value);
+
+            if(valueType === "string" || valueType === "array"){
+
+                var $item = $(selector);
+                var tagName = $item.prop('tagName').toLowerCase();
+                var type = $item.prop('type');
+
+                if(valueType === "string"){
+
+                    if(tagName == 'input'){
+
+                        if(type == 'radio'){
+                            $item.filter('[value=' + value + ']').click();
+                        }else{
+                            $item.val(value);
+                        }
+
+                    }
+                }else if(valueType === "array"){
+
+                    if(tagName == 'input' && type == 'checkbox'){
+                        $.each(value, function(val){
+                            $item.filter('[value=' + val + ']').click();
+                        });
+                    }
+                }
+
+            }else{
+                self.call(this, value);
+            }
+        });
+    },
+
     /**
      * 创建快照
      */
@@ -134,14 +174,31 @@ var apis = {
         var filtedValues = apis.transNodeToVal(filtedNodes);
         console.log(filtedValues);
 
-        //localStorage[href] = filtedInputs;
+        var obj = {};
+        obj[href] = filtedValues;
+
+        storage.set(obj);
+        return "成功创建快照！";
     },
 
     /**
-     * 数据恢复
+     * 快照恢复
      */
     recovery: function(){
-        var storedData = localStorage[href];
+
+        return storage.get(href, function(storedData){
+            storedData = storedData[href];
+            if(storedData){
+                console.log(storedData);
+
+                apis.transValToNode(storedData);
+
+
+                return "快照已成功恢复！";
+            }else{
+                return "对不起，当前页面尚未创建过快照！";
+            }
+        });
 
     },
 
@@ -162,7 +219,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }*/
     console.log(request.action);
 
-    apis[request.action].call();
+    var msg = apis[request.action].call();
 
-    sendResponse({msg: "快照已生成！"});
+    sendResponse({msg: msg});
 });

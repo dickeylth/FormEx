@@ -195,7 +195,6 @@ var apis = {
 
                 apis.transValToNode(storedData);
 
-
                 return "快照已成功恢复！";
             }else{
                 return "对不起，当前页面尚未创建过快照！";
@@ -215,11 +214,6 @@ var apis = {
 
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    console.log(sender.tab ? "来自内容脚本：" + sender.tab.url : "来自扩展程序");
-    /*if (request.greeting == "您好"){
-        sendResponse({farewell: "再见"});
-    }*/
-    console.log(request.action);
 
     var msg = apis[request.action].call();
 

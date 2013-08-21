@@ -136,26 +136,28 @@ var apis = {
             if(valueType === "string" || valueType === "array"){
 
                 var $item = $(selector);
-                var tagName = $item.prop('tagName').toLowerCase();
-                var type = $item.prop('type');
+                if($item.length > 0){
+                    var tagName = $item.prop('tagName').toLowerCase();
+                    var type = $item.prop('type');
 
-                if(valueType === "string"){
+                    if(valueType === "string"){
 
-                    if(tagName == 'input'){
+                        if(tagName == 'input'){
 
-                        if(type == 'radio'){
-                            $item.filter('[value=' + value + ']').click();
-                        }else{
-                            $item.val(value);
+                            if(type == 'radio'){
+                                $item.filter('[value="' + value + '"]').click();
+                            }else{
+                                $item.val(value);
+                            }
+
                         }
+                    }else if(valueType === "array"){
 
-                    }
-                }else if(valueType === "array"){
-
-                    if(tagName == 'input' && type == 'checkbox'){
-                        $.each(value, function(val){
-                            $item.filter('[value=' + val + ']').click();
-                        });
+                        if(tagName == 'input' && type == 'checkbox'){
+                            $.each(value, function(idx, val){
+                                $item.filter('[value="' + val + '"]').click();
+                            });
+                        }
                     }
                 }
 

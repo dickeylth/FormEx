@@ -15,6 +15,8 @@ function procAction(){
         chrome.tabs.sendMessage(tabs[0].id, {greeting: "您好", action: action}, function(response) {
             response.msg && alert(response.msg);
             window.close();
+
+            return true;
         });
     });
 }

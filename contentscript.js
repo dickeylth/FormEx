@@ -13,7 +13,7 @@ chrome.runtime.sendMessage({}, function(response) {});
 var storage = chrome.storage.local;
 
 //  href, get url without query
-var href = window.location.href.split('?')[0];
+var href = window.location.href.split('?')[0].split('#')[0];
 
 /**
  * 汇总api
@@ -147,7 +147,7 @@ var apis = {
                             if(type == 'radio'){
                                 $item.filter('[value="' + value + '"]').click();
                             }else{
-                                $item.val(value);
+                                $item.focus().val(value).change().blur();
                             }
 
                         }
@@ -170,7 +170,7 @@ var apis = {
     /**
      * 创建快照
      */
-    snapshot: function(){
+    snapshot: function(callback){
 
         var filtedNodes = apis.filterNodes();
         var filtedValues = apis.transNodeToVal(filtedNodes);
@@ -180,27 +180,32 @@ var apis = {
         obj[href] = filtedValues;
 
         storage.set(obj);
-        return "成功创建快照！";
+        var msg =  "成功创建快照！";
+        callback({msg: msg});
     },
 
     /**
      * 快照恢复
      */
-    recovery: function(){
+    recovery: function(callback){
 
-        return storage.get(href, function(storedData){
+        var msg = '';
+        storage.get(href, function(storedData){
             storedData = storedData[href];
             if(storedData){
                 console.log(storedData);
 
                 apis.transValToNode(storedData);
 
-                return "快照已成功恢复！";
+                msg = "快照已成功恢复！";
             }else{
-                return "对不起，当前页面尚未创建过快照！";
+                msg = "对不起，当前页面尚未创建过快照！";
             }
+            callback({msg: msg});
+            return msg;
         });
 
+        return msg;
     },
 
     /**
@@ -215,7 +220,8 @@ var apis = {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
-    var msg = apis[request.action].call();
+    apis[request.action].call(apis, sendResponse);
 
-    sendResponse({msg: msg});
+    return true;
+    //sendResponse({msg: msg});
 });

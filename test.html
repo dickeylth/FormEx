@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Form Input</title>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.css"/>
+    <style>
+        .main{
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <form action="test.html" id="mainForm">
+            <ul>
+                <li><label for="username">用户名：<input type="text" id="username"></label></li>
+                <li><label for="password">密码：<input type="password" id="password"></label></li>
+                <li><label for="email">Email：<input type="email" id="email"></label></li>
+                <li>
+                    <label for="degree">学历：</label>
+                    <select id="degree">
+                        <option value="1">高中</option>
+                        <option value="2">本科</option>
+                        <option value="3">硕士</option>
+                        <option value="4">博士</option>
+                    </select>
+                </li>
+                <li>
+                    <input type="button" class="btn btn-primary" value="提交"/>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#username').on('change', function(e){
+                console.log(e);
+            });
+        });
+    </script>
+</body>
+</html>

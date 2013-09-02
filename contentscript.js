@@ -49,7 +49,7 @@ var apis = {
             if (tagName == 'input' && inpType && ($.inArray(inpType, excludeInputs) == -1)) {
 
                 var typeObj = filtedInputs[tagName][inpType] || {};
-                var key = (id && ("#" + id)) || (name && ("input[name=" + name + "]"));
+                var key = (id && ("#" + id)) || (name && ("input[name='" + name + "']"));
 
                 if (inpType == 'checkbox') {
 
@@ -76,6 +76,7 @@ var apis = {
 
                     // 对于radio，只保留第一个被选中的值即可
                     if ($item.is(':checked')) {
+                        var key = "input[name='" + name + "']";
                         typeObj[key] = $item;
                     }
 
@@ -94,7 +95,7 @@ var apis = {
                 if (id) {
                     filtedInputs[tagName]["#" + id] = $item;
                 } else if (name) {
-                    filtedInputs[tagName][tagName + "[name=" + name + "]"] = $item;
+                    filtedInputs[tagName][tagName + "[name='" + name + "']"] = $item;
                 }
             }
 

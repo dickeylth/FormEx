@@ -147,9 +147,6 @@ var apis = {
                                 var ele = $item.filter(function(idx){
                                     return $(this).val() == value;
                                 });
-
-                                //var ele = $item.filter('[value="' + value + '"]');
-                                apis.dispatch(ele[0], 'click');
                                 ele.click();
                             } else {
                                 $item.focus().val(value).blur();
@@ -163,12 +160,11 @@ var apis = {
                     } else if (valueType === "array") {
 
                         if (tagName == 'input' && type == 'checkbox') {
+
                             $.each(value, function (idx, val) {
-                                //var ele = $item.filter('[value="' + val + '"]');
                                 var ele = $item.filter(function(idx){
                                     return $(this).val() == value;
                                 });
-                                apis.dispatch(ele[0], 'click');
                                 ele.click();
                             });
                         }
@@ -241,10 +237,47 @@ var apis = {
     /**
      * 自动填充
      */
-    autofill: function () {
+    autofill: function (callback) {
+        var config = {};
+        var msg = '';
+        storage.get('defaultOpts', function(data){
+            if(data.defaultOpts){
+                config = data.defaultOpts;
+            }
 
+            $.each(config, function(query, value){
+                $(query).each(function(idx, item){
+                    item.value= value;
+                    apis.dispatch(item, 'change');
+                });
+            });
+
+            msg = '自动填充成功！';
+            callback({msg: msg});
+            return msg;
+        });
+
+        return msg;
     }
 };
+
+// 自动填充默认选项
+var defaultOpts = {
+    'input[type="text"]'            : '张三',
+    'input[type="tel"]'             : '18012345678',
+    'input[type="email"]'           : 'test@taobao.com',
+    'input[type="password"]'        : 'Taobao1234',
+    'input[type="date"]'            : '2013-09-26',
+    'input[type="datetime-local"]'  : '2013-09-27T01:00',
+    'input[type="time"]'            : '00:01',
+    'input[type="month"]'           : '2013-09',
+    'input[type="week"]'            : '2013-W38',
+    'input[type="number"]'          : '31415926535',
+    'input[type="color"]'           : '#FFFFFF',
+    'input[type="url"]'             : 'http://www.taobao.com',
+    'textarea'                      : '淘宝测试淘宝测试淘宝测试淘宝测试'
+};
+storage.set({'defaultOpts': defaultOpts});
 
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {

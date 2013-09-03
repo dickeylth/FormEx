@@ -5,7 +5,6 @@
  * Time: 下午2:24
  * To change this template use File | Settings | File Templates.
  */
-console.log(chrome);
 
 // chrome优化的localStorage
 var storage = chrome.storage.local;
@@ -14,34 +13,23 @@ var optApis = {
 
     load: function(){
         var config = {};
-        storage.get('config', function(data){
-            if(data.config){
-                config = data.config;
+        storage.get('defaultOpts', function(data){
+            if(data.defaultOpts){
+                config = data.defaultOpts;
             }
-            $(':input').each(function(idx, item){
-                var $node = $(item);
-                var tagName = $node.prop('tagName').toLowerCase();
 
-                if(tagName == 'input'){
-                    var type = $node.prop('type');
-                    $(tagName + '[type="' + type + '"]').val(config['type="' + type + '"']);
-
-                }else if(tagName == 'textarea'){
-                    $(tagName).val(config[tagName]);
-                }
+            $.each(config, function(query, value){
+                $(query).val(value);
             });
-            //storage.set({'config':config});
 
             console.log(config);
-
-            alert('加载成功！');
         });
     },
     save: function(){
         var config = {};
-        storage.get('config', function(data){
-            if(data.config){
-                config = data.config;
+        storage.get('defaultOpts', function(data){
+            if(data.defaultOpts){
+                config = data.defaultOpts;
             }
             $(':input').each(function(idx, item){
                 var $node = $(item);
@@ -56,19 +44,19 @@ var optApis = {
                     }
                 }
             });
-            storage.set({'config':config});
+            storage.set({'defaultOpts':config});
 
             console.log(config);
 
             alert('保存成功！');
         });
     }
-}
+};
 
+// 加载配置数据
 optApis.load();
 
+// 保存配置数据
 $('#J_SaveConfig').click(function(){
-
     optApis.save();
-
 });

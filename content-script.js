@@ -26,23 +26,34 @@ var apis = {
      * 监听页面事件
      */
     delegateDoc: function(){
-        /*$(document).delegate(':input[type!="radio"][type!="checkbox"]', 'change', function(e){
-            console.log(e);
-            var $target = $(e.currentTarget);
-            console.log($target.prop('tagName') + '->' + $target.val());
-        }).delegate('input[type="radio"], input[type="checkbox"]', 'click', function(e){
-            console.log(e);
-            var $target = $(e.currentTarget);
-            console.log($target.prop('tagName') + '->' + $target.val());
-        }).delegate('a', 'click', function(e){
+        $(document).on('change paste keyup input', ':input[type!="radio"][type!="checkbox"]', function(e){
             console.log(e);
             var $target = $(e.currentTarget);
             console.log($target.prop('tagName') + '->' + $target.val());
 
+            var xpath = $target.calcXpath();
+            console.log(xpath);
+
+        }).on('click', 'input[type="radio"], input[type="checkbox"]', function(e){
+            console.log(e);
+            var $target = $(e.currentTarget);
+            console.log($target.prop('tagName') + '->' + $target.val());
+
+            var xpath = $target.calcXpath();
+            console.log(xpath);
+
+        }).on('click', 'a, span, em, i, s', function(e){
+            console.log(e);
+            var $target = $(e.currentTarget);
+            console.log($target.prop('tagName') + '->' + $target.val());
+
+            var xpath = $target.calcXpath();
+            console.log(xpath);
 
             storage.set({'testNode': $target});
-        });*/
-        $(document).delegate('*', 'click', function(e){
+        });
+
+        /*$(document).delegate('*', 'click', function(e){
             console.log(e);
             var $target = $(e.currentTarget);
             console.log($target.prop('tagName') + '->' + $target.val());
@@ -51,14 +62,8 @@ var apis = {
 
 
             storage.set({'click': {clientX: pageX, clientY: pageY}});
-        });
-    },
+        });*/
 
-    imitateClick: function (oElement, iClientX, iClientY) {
-        var oEvent = document.createEvent("MouseEvents");
-        oEvent.initMouseEvent("click", true, true, document.defaultView, 0, 0, 0,
-            iClientX, iClientY/*, false, false, false, false, 0, null*/);
-        oElement.dispatchEvent(oEvent);
     },
 
 

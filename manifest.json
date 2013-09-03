@@ -17,7 +17,7 @@
                 "http://*/*",
                 "https://*/*"
             ],
-            "js": ["jquery.min.js", "contentscript.js"],
+            "js": ["jquery.min.js", "content-script.js"],
             "run_at": "document_end",
             "all_frames": false
         }
@@ -28,5 +28,8 @@
     "permissions": [
         "storage"
     ],
-    "manifest_version": 2
+    "manifest_version": 2,
+    "web_accessible_resources": [
+        "jquery-1.10.2.min.map"
+    ]
 }

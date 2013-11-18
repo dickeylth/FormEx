@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>配置默认数据</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        *, label{
+            font-family: 'Microsoft Yahei', '微软雅黑';
+        }
+        .title{
+            margin-left: 10px;
+            border-bottom: 2px solid #0072DB;
+        }
+        #page{
+            margin: 0 10px;
+        }
+        ul{
+            list-style-type: none;
+        }
+        .form-horizontal .control-label{
+            width: 100px;
+        }
+        .form-horizontal .controls{
+            margin-left: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div id="page">
+        <h3 class="title">配置自动完成默认数据</h3>
+        <form id="defaultValueForm" class="form-horizontal">
+
+            <div class="control-group">
+                <label class="control-label" for="J_TextInp">普通文本：</label>
+                <div class="controls">
+                    <input type="text" name="J_TextInp" id="J_TextInp" placeholder="张三李四王五测试"/></label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="J_TelInp">电话：</label>
+                <div class="controls">
+                    <input type="tel" name="J_TelInp" id="J_TelInp" placeholder="18012345678"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="J_EmailInp">Email：</label>
+                <div class="controls">
+                    <input type="email" name="J_EmailInp" id="J_EmailInp" placeholder="test@taobao.com"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="J_PasswordInp">密码： </label>
+                <div class="controls">
+                    <input type="password" name="J_PasswordInp" id="J_PasswordInp" placeholder="Taobao2013"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="J_PasswordInp">日期系列： </label>
+                <div class="controls">
+                    <div class="control-group">
+                        <label class="control-label" for="J_DateInp">普通日期： </label>
+                        <div class="controls">
+                            <input type="date" name="J_DateInp" id="J_DateInp" placeholder="YYYY-MM-DD"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="J_DateTimeInp">带时分日期： </label>
+                        <div class="controls">
+                            <input type="datetime-local" name="J_DateTimeInp" id="J_DateTimeInp" placeholder="YYYY-MM-DD hh:mm"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="J_TimeInp">仅时分日期： </label>
+                        <div class="controls">
+                            <input type="time" name="J_TimeInp" id="J_TimeInp" placeholder="hh:mm"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="J_MonthInp">仅月份： </label>
+                        <div class="controls">
+                            <input type="month" name="J_MonthInp" id="J_MonthInp" placeholder="MM"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="J_WeekInp">仅周： </label>
+                        <div class="controls">
+                            <input type="week" name="J_WeekInp" id="J_WeekInp" placeholder="52"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="J_NumberInp">数字： </label>
+                <div class="controls">
+                    <input type="number" name="J_NumberInp" id="J_NumberInp" placeholder="8"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="J_NumberInp">颜色： </label>
+                <div class="controls">
+                    <input type="color" name="J_ColorInp" id="J_ColorInp" placeholder="#FFFFFF"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="J_UrlInp">URL： </label>
+                <div class="controls">
+                    <input type="url" name="J_UrlInp" id="J_UrlInp" placeholder="http://www.taobao.com"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="J_TextareaInp">文本框： </label>
+                <div class="controls">
+                    <textarea name="J_TextareaInp" id="J_TextareaInp" placeholder="淘宝测试淘宝测试淘宝测试"></textarea>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <a class="btn btn-danger" id="J_SaveConfig">保存</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script src="options.js"></script>
+</body>
+</html>
